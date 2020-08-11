@@ -1,8 +1,8 @@
 #include <string.h>
 #include <assert.h>
 #include "ed25519.h"
-#include "hash/hmac_sha3.h"
-#include "hash/ripemd160.h"
+#include "hmac_sha3.h"
+#include "ripemd160.h"
 
 static void BIP32Hash(const unsigned char chainCode[32], unsigned int nChild, unsigned char header, const unsigned char data[32], unsigned char output[64])
 {

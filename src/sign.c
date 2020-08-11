@@ -1,6 +1,6 @@
 #include "ed25519.h"
-#include "hash/sha3.h"
-#include "hash/hmac_sha3.h"
+#include "sha3.h"
+#include "hmac_sha3.h"
 #include "ge.h"
 #include "sc.h"
 
