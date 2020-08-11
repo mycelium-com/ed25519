@@ -22,7 +22,7 @@ static void BIP32Hash(const unsigned char chainCode[32], unsigned int nChild, un
     hmac_sha3_512_final(&hmac_ctx, output, 64);
 }
 
-void keychain_private_rebuild(const KEYCHAIN_PUBLIC_CTX *from, const unsigned char key[32], KEYCHAIN_PRIVATE_CTX *to) {
+void ed25519_keychain_private_rebuild(const KEYCHAIN_PUBLIC_CTX *from, const unsigned char key[32], KEYCHAIN_PRIVATE_CTX *to) {
     to->nDepth = from->nDepth;
     to->nChild = from->nChild;
     memcpy(to->key, key, 32);
@@ -31,7 +31,7 @@ void keychain_private_rebuild(const KEYCHAIN_PUBLIC_CTX *from, const unsigned ch
     memcpy(to->vchFingerprint, from->vchFingerprint, 32);
 }
 
-void keychain_private_init(KEYCHAIN_PRIVATE_CTX *ctx, const unsigned char *seed, size_t seed_len) {
+void ed25519_keychain_private_init(KEYCHAIN_PRIVATE_CTX *ctx, const unsigned char *seed, size_t seed_len) {
     static const unsigned char hashkey[] = {'E','D','2','5','5','1','9',' ','s','e','e','d'};
     unsigned char key_mac[64];
     hmac_sha512_ctx hmac_ctx;
@@ -56,7 +56,7 @@ void keychain_private_init(KEYCHAIN_PRIVATE_CTX *ctx, const unsigned char *seed,
     memset(ctx->vchFingerprint, 0, sizeof(ctx->vchFingerprint));
 }
 
-void keychain_private_derive(const KEYCHAIN_PRIVATE_CTX *ctx, KEYCHAIN_PRIVATE_CTX *child_ctx, unsigned int nChild) {
+void ed25519_keychain_private_derive(const KEYCHAIN_PRIVATE_CTX *ctx, KEYCHAIN_PRIVATE_CTX *child_ctx, unsigned int nChild) {
     SHA3_CTX sha3_ctx;
     unsigned char prefix = 0x03;
     unsigned char bip32_hash[64];
@@ -95,7 +95,7 @@ void keychain_private_derive(const KEYCHAIN_PRIVATE_CTX *ctx, KEYCHAIN_PRIVATE_C
     ed25519_get_pubkey(child_ctx->pubkey, child_ctx->key);
 }
 
-void keychain_private_neuter(const KEYCHAIN_PRIVATE_CTX *ctx, KEYCHAIN_PUBLIC_CTX *public_ctx) {
+void ed25519_keychain_private_neuter(const KEYCHAIN_PRIVATE_CTX *ctx, KEYCHAIN_PUBLIC_CTX *public_ctx) {
     // Copy derivation context
     public_ctx->nDepth = ctx->nDepth;
     public_ctx->nChild = ctx->nChild;
@@ -105,7 +105,7 @@ void keychain_private_neuter(const KEYCHAIN_PRIVATE_CTX *ctx, KEYCHAIN_PUBLIC_CT
     memcpy(public_ctx->pubkey, ctx->pubkey, sizeof(ctx->pubkey));
 }
 
-void keychain_private_export(const KEYCHAIN_PRIVATE_CTX *ctx, unsigned char binary[BIP32_EXTKEY_SIZE]) {
+void ed25519_keychain_private_export(const KEYCHAIN_PRIVATE_CTX *ctx, unsigned char binary[BIP32_EXTKEY_SIZE]) {
     // Create xpriv binary representation
     //  Note: public key is not exported
 
@@ -124,7 +124,7 @@ void keychain_private_export(const KEYCHAIN_PRIVATE_CTX *ctx, unsigned char bina
     memcpy(binary+42, ctx->key, 32);
 }
 
-void keychain_private_import(KEYCHAIN_PRIVATE_CTX *ctx, const unsigned char binary[BIP32_EXTKEY_SIZE]) {
+void ed25519_keychain_private_import(KEYCHAIN_PRIVATE_CTX *ctx, const unsigned char binary[BIP32_EXTKEY_SIZE]) {
     // Init structure with data from binary representation
     ctx->nDepth = binary[0];
     memcpy(ctx->vchFingerprint, binary+1, 4);
@@ -135,7 +135,7 @@ void keychain_private_import(KEYCHAIN_PRIVATE_CTX *ctx, const unsigned char bina
     ed25519_get_pubkey(ctx->pubkey, ctx->key);
 }
 
-int keychain_private_equals(const KEYCHAIN_PRIVATE_CTX *ctx1, const KEYCHAIN_PRIVATE_CTX *ctx2) {
+int ed25519_keychain_private_equals(const KEYCHAIN_PRIVATE_CTX *ctx1, const KEYCHAIN_PRIVATE_CTX *ctx2) {
     int r = 0;
     
     // Use xor / and for constant time comparison
@@ -148,15 +148,15 @@ int keychain_private_equals(const KEYCHAIN_PRIVATE_CTX *ctx1, const KEYCHAIN_PRI
     return !r;
 }
 
-const unsigned char * keychain_private_get_key(const KEYCHAIN_PRIVATE_CTX *ctx) {
+const unsigned char * ed25519_keychain_private_get_key(const KEYCHAIN_PRIVATE_CTX *ctx) {
     return &ctx->key[0];
 }
 
-const unsigned char * keychain_private_get_pubkey(const KEYCHAIN_PRIVATE_CTX *ctx) {
+const unsigned char * ed25519_keychain_private_get_pubkey(const KEYCHAIN_PRIVATE_CTX *ctx) {
     return &ctx->pubkey[0];
 }
 
-void keychain_public_derive(const KEYCHAIN_PUBLIC_CTX *ctx, KEYCHAIN_PUBLIC_CTX *child_ctx, unsigned int nChild) {
+void ed25519_keychain_public_derive(const KEYCHAIN_PUBLIC_CTX *ctx, KEYCHAIN_PUBLIC_CTX *child_ctx, unsigned int nChild) {
     unsigned char bip32_hash[64];
 
     // Only non-hardened generation possible here
@@ -172,7 +172,7 @@ void keychain_public_derive(const KEYCHAIN_PUBLIC_CTX *ctx, KEYCHAIN_PUBLIC_CTX 
     ed25519_add_scalar(child_ctx->pubkey, NULL, bip32_hash);
 }
 
-void keychain_public_export(const KEYCHAIN_PUBLIC_CTX *ctx, unsigned char binary[BIP32_EXTKEY_SIZE]) {
+void ed25519_keychain_public_export(const KEYCHAIN_PUBLIC_CTX *ctx, unsigned char binary[BIP32_EXTKEY_SIZE]) {
     // Create xpub binary representation
 
     // Chain depth
@@ -190,7 +190,7 @@ void keychain_public_export(const KEYCHAIN_PUBLIC_CTX *ctx, unsigned char binary
     memcpy(binary+42, ctx->pubkey, 32);
 }
 
-void keychain_public_import(KEYCHAIN_PUBLIC_CTX *ctx, const unsigned char binary[BIP32_EXTKEY_SIZE]) {
+void ed25519_keychain_public_import(KEYCHAIN_PUBLIC_CTX *ctx, const unsigned char binary[BIP32_EXTKEY_SIZE]) {
     // Init structure with data from binary representation
     ctx->nDepth = binary[0];
     memcpy(ctx->vchFingerprint, binary+1, 4);
@@ -199,7 +199,7 @@ void keychain_public_import(KEYCHAIN_PUBLIC_CTX *ctx, const unsigned char binary
     memcpy(ctx->pubkey, binary+42, 32);
 }
 
-int keychain_public_equals(const KEYCHAIN_PUBLIC_CTX *ctx1, const KEYCHAIN_PUBLIC_CTX *ctx2) {
+int ed25519_keychain_public_equals(const KEYCHAIN_PUBLIC_CTX *ctx1, const KEYCHAIN_PUBLIC_CTX *ctx2) {
     int r = 0;
     
     // Use xor / and for constant time comparison
@@ -211,6 +211,6 @@ int keychain_public_equals(const KEYCHAIN_PUBLIC_CTX *ctx1, const KEYCHAIN_PUBLI
     return !r;
 }
 
-const unsigned char * keychain_public_get_pubkey(const KEYCHAIN_PUBLIC_CTX *ctx) {
+const unsigned char * ed25519_keychain_public_get_pubkey(const KEYCHAIN_PUBLIC_CTX *ctx) {
     return &ctx->pubkey[0];
 }
