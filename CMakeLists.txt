@@ -8,7 +8,6 @@ endif()
 
 set(ed25519_src
    src/sign.c
-   src/keychain.c
    src/add_scalar.c
    src/fe.c
    src/sc.c
