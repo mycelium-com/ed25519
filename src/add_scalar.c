@@ -3,7 +3,7 @@
 #include "sc.h"
 
 /* see http://crypto.stackexchange.com/a/6215/4697 */
-void ed25519_add_scalar(unsigned char *public_key, unsigned char *private_key, const unsigned char *scalar) {
+int ed25519_add_scalar(unsigned char *public_key, unsigned char *private_key, const unsigned char *scalar) {
     const unsigned char SC_1[32] = {1}; /* scalar with value 1 */
     
     unsigned char n[32]; 
@@ -52,4 +52,6 @@ void ed25519_add_scalar(unsigned char *public_key, unsigned char *private_key, c
         /* pack public key */
         ge_p3_tobytes(public_key, &A);
     }
+
+    return 1;
 }
