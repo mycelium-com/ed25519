@@ -7,19 +7,6 @@
 extern "C" {
 #endif
 
-inline int ed25519_consttime_equal_4(const unsigned char *x, const unsigned char *y) {
-    unsigned char r = 0;
-
-    r = x[0] ^ y[0];
-    #define F(i) r |= x[i] ^ y[i]
-    F(1);
-    F(2);
-    F(3);
-    #undef F
-
-    return !r;
-}
-
 void ed25519_create_privkey(unsigned char *private_key, const unsigned char *seed);
 void ed25519_create_keypair(unsigned char *public_key, unsigned char *private_key, const unsigned char *seed);
 void ed25519_get_pubkey(unsigned char *public_key, const unsigned char *private_key);
