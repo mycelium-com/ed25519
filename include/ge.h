@@ -71,4 +71,7 @@ void ge_p3_dbl(ge_p1p1 *r, const ge_p3 *p);
 void ge_p3_to_cached(ge_cached *r, const ge_p3 *p);
 void ge_p3_to_p2(ge_p2 *r, const ge_p3 *p);
 
+void ge_point_add(uint8_t *p_1, uint8_t *p_2, uint8_t *p_result);
+
+
 #endif

@@ -25,7 +25,7 @@ target_include_directories(ed25519 PRIVATE extras/hashing/include)
 set_target_properties(ed25519 PROPERTIES
    VERSION ${PROJECT_VERSION}
    POSITION_INDEPENDENT_CODE 1
-   PUBLIC_HEADER "include/ed25519.h"
+   PUBLIC_HEADER "include/ed25519.h;include/ge.h"
 )
 
 include(GNUInstallDirs)

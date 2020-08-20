@@ -465,3 +465,20 @@ void ge_tobytes(unsigned char *s, const ge_p2 *h) {
     fe_tobytes(s, y);
     s[31] ^= fe_isnegative(x) << 7;
 }
+
+void ge_point_add(uint8_t *p_1, uint8_t *p_2, uint8_t *p_result) {
+    ge_p1p1 A_p1p1;
+    ge_p3 A;
+    ge_p3 point_1;
+    ge_p3 point_2;
+    ge_cached T;
+
+    ge_frombytes_negate_vartime(&point_1, p_1);
+    ge_frombytes_negate_vartime(&point_2, p_2);
+    fe_neg(point_1.X, point_1.X); /* undo negate */
+    fe_neg(point_1.T, point_1.T); /* undo negate */
+    ge_p3_to_cached(&T, &point_1);
+    ge_add(&A_p1p1, &point_2, &T);
+    ge_p1p1_to_p3(&A, &A_p1p1); 
+    ge_p3_tobytes(p_result, &A);
+}
