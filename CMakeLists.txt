@@ -18,6 +18,7 @@ set(ed25519_src
 )
 
 add_library(ed25519 ${ed25519_src})
+target_link_libraries(ed25519 hashing)
 
 target_include_directories(ed25519 PRIVATE include)
 target_include_directories(ed25519 PRIVATE extras/hashing/include)
