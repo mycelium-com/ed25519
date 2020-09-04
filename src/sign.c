@@ -4,11 +4,15 @@
 #include "ge.h"
 #include "sc.h"
 
-void ed25519_sign(unsigned char *signature, const unsigned char *message, size_t message_len, const unsigned char *public_key, const unsigned char *private_key) {
+void ed25519_sign(unsigned char *signature, const unsigned char *message, size_t message_len, const unsigned char *private_key) {
     SHA3_CTX hash;
+    unsigned char public_key[32];
     unsigned char hram[64];
     unsigned char r[64];
     ge_p3 R;
+
+    // Public key is required for signing
+    ed25519_get_pubkey(public_key, private_key);
 
     // Use hmac-sha3-512 to generate r parameter for signing
     hmac_sha3_512(private_key, 32, message, message_len, r, sizeof(r));
