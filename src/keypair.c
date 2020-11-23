@@ -19,7 +19,7 @@ void ed25519_get_pubkey(unsigned char *public_key, const unsigned char *private_
     ge_p3_tobytes(public_key, &A);
 }
 
-int ed25519_verify_privkey(const unsigned char *private_key) {
+int ed25519_verify_master_privkey(const unsigned char *private_key) {
     unsigned char key_copy[32];
     if (0 != read_bit(private_key[0], 5)) {
         memcpy(key_copy, private_key, 32);
@@ -29,6 +29,15 @@ int ed25519_verify_privkey(const unsigned char *private_key) {
         return memcmp(key_copy, private_key, 32) == 0;
     }
     return 0;
+}
+
+int ed25519_verify_privkey(const unsigned char *private_key) {
+    unsigned char key_copy[32];
+    memcpy(key_copy, private_key, 32);
+    key_copy[0] &= 248u;
+    key_copy[31] &= 127u;
+    key_copy[31] |= 64u;
+    return memcmp(key_copy, private_key, 32) == 0;
 }
 
 int ed25519_verify_pubkey(const unsigned char *public_key) {
