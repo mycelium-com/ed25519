@@ -21,7 +21,7 @@ void ed25519_get_pubkey(unsigned char *public_key, const unsigned char *private_
 
 int ed25519_verify_master_privkey(const unsigned char *private_key) {
     unsigned char key_copy[32];
-    if (0 != read_bit(private_key[0], 5)) {
+    if (0 == read_bit(private_key[0], 5)) {
         memcpy(key_copy, private_key, 32);
         key_copy[0] &= 248u;
         key_copy[31] &= 127u;
