@@ -11,7 +11,7 @@ void ed25519_create_privkey(unsigned char *private_key, const unsigned char *see
 void ed25519_create_keypair(unsigned char *public_key, unsigned char *private_key, const unsigned char *seed);
 void ed25519_get_pubkey(unsigned char *public_key, const unsigned char *private_key);
 int ed25519_verify_pubkey(const unsigned char *public_key);
-int ed25519_verify_master_privkey(const unsigned char *private_key);
+int ed25519_verify_master_seed_hash(const unsigned char *seed_hash);
 int ed25519_verify_privkey(const unsigned char *private_key);
 int ed25519_sign(unsigned char *signature, const unsigned char *message, size_t message_len, const unsigned char *private_key);
 int ed25519_verify(const unsigned char *signature, const unsigned char *message, size_t message_len, const unsigned char *public_key);
