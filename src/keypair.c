@@ -41,14 +41,14 @@ int ed25519_verify_pubkey(const unsigned char *public_key) {
 }
 
 void ed25519_create_privkey(unsigned char *private_key, const unsigned char *seed) {
-    sha3_256(seed, 32, private_key);
+    myc_sha3_256(seed, 32, private_key);
     private_key[0] &= 248;
     private_key[31] &= 63;
     private_key[31] |= 64;
 }
 
 void ed25519_create_keypair(unsigned char *public_key, unsigned char *private_key, const unsigned char *seed) {
-    sha3_256(seed, 32, private_key);
+    myc_sha3_256(seed, 32, private_key);
     private_key[0] &= 248;
     private_key[31] &= 63;
     private_key[31] |= 64;

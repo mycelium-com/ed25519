@@ -47,7 +47,7 @@ inline static int ed25519_consttime_equal_32(const unsigned char *x, const unsig
 int ed25519_verify(const unsigned char *signature, const unsigned char *message, size_t message_len, const unsigned char *public_key) {
     unsigned char h[64];
     unsigned char checker[32];
-    SHA3_CTX hash;
+    MYC_SHA3_CTX hash;
     ge_p3 A;
     ge_p2 R;
 
@@ -59,11 +59,11 @@ int ed25519_verify(const unsigned char *signature, const unsigned char *message,
         return 0;
     }
 
-    sha3_512_Init(&hash);
-    sha3_Update(&hash, signature, 32);
-    sha3_Update(&hash, public_key, 32);
-    sha3_Update(&hash, message, message_len);
-    sha3_Final(&hash, h);
+    myc_sha3_512_Init(&hash);
+    myc_sha3_Update(&hash, signature, 32);
+    myc_sha3_Update(&hash, public_key, 32);
+    myc_sha3_Update(&hash, message, message_len);
+    myc_sha3_Final(&hash, h);
     
     sc_reduce(h);
     ge_double_scalarmult_vartime(&R, h, &A, signature + 32);
