@@ -21,7 +21,7 @@ static void scalar_add(const uint8_t *src1, const uint8_t *src2, uint8_t *res){
     }
 }
 
-int ed25519_add_scalar(unsigned char *public_key, unsigned char *private_key, const unsigned char *scalar) {
+int myc_ed25519_add_scalar(unsigned char *public_key, unsigned char *private_key, const unsigned char *scalar) {
     unsigned char Z[32] = {0};
     unsigned char Z8[32] = {0};
 
@@ -42,7 +42,7 @@ int ed25519_add_scalar(unsigned char *public_key, unsigned char *private_key, co
 
     /* public key: child = parent + 8*Z */
     if (public_key) {
-        ge_point_add(public_key, Z8, public_key);
+        myc_ge_point_add(public_key, Z8, public_key);
     }
 
     return 1;

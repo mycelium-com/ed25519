@@ -6,7 +6,7 @@
 
 #if ((defined(__STDC__) && __STDC__ && __STDC_VERSION__ >= 199901L) || (defined(__WATCOMC__) && (defined(_STDINT_H_INCLUDED) || __WATCOMC__ >= 1250)) || (defined(__GNUC__) && (defined(_STDINT_H) || defined(_STDINT_H_) || defined(__UINT_FAST64_TYPE__)) )) && !defined(FIXEDINT_H_INCLUDED)
     #include <stdint.h>
-    #define FIXEDINT_H_INCLUDED
+    #define MYC_FIXEDINT_H_INCLUDED
 
     #if defined(__WATCOMC__) && __WATCOMC__ >= 1250 && !defined(UINT64_C)
         #include <limits.h>
@@ -15,8 +15,8 @@
 #endif
 
 
-#ifndef FIXEDINT_H_INCLUDED
-    #define FIXEDINT_H_INCLUDED
+#ifndef MYC_FIXEDINT_H_INCLUDED
+    #define MYC_FIXEDINT_H_INCLUDED
     
     #include <limits.h>
 

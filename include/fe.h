@@ -1,5 +1,5 @@
-#ifndef FE_H
-#define FE_H
+#ifndef MYC_FE_H
+#define MYC_FE_H
 
 #include "fixedint.h"
 
@@ -13,29 +13,29 @@
 */
 
 
-typedef int32_t fe[10];
+typedef int32_t myc_fe[10];
 
 
-void fe_0(fe h);
-void fe_1(fe h);
+void myc_fe_0(myc_fe h);
+void myc_fe_1(myc_fe h);
 
-void fe_frombytes(fe h, const unsigned char *s);
-void fe_tobytes(unsigned char *s, const fe h);
+void myc_fe_frombytes(myc_fe h, const unsigned char *s);
+void myc_fe_tobytes(unsigned char *s, const myc_fe h);
 
-void fe_copy(fe h, const fe f);
-int fe_isnegative(const fe f);
-int fe_isnonzero(const fe f);
-void fe_cmov(fe f, const fe g, unsigned int b);
-void fe_cswap(fe f, fe g, unsigned int b);
+void myc_fe_copy(myc_fe h, const myc_fe f);
+int myc_fe_isnegative(const myc_fe f);
+int myc_fe_isnonzero(const myc_fe f);
+void myc_fe_cmov(myc_fe f, const myc_fe g, unsigned int b);
+void myc_fe_cswap(myc_fe f, myc_fe g, unsigned int b);
 
-void fe_neg(fe h, const fe f);
-void fe_add(fe h, const fe f, const fe g);
-void fe_invert(fe out, const fe z);
-void fe_sq(fe h, const fe f);
-void fe_sq2(fe h, const fe f);
-void fe_mul(fe h, const fe f, const fe g);
-void fe_mul121666(fe h, fe f);
-void fe_pow22523(fe out, const fe z);
-void fe_sub(fe h, const fe f, const fe g);
+void myc_fe_neg(myc_fe h, const myc_fe f);
+void myc_fe_add(myc_fe h, const myc_fe f, const myc_fe g);
+void myc_fe_invert(myc_fe out, const myc_fe z);
+void myc_fe_sq(myc_fe h, const myc_fe f);
+void myc_fe_sq2(myc_fe h, const myc_fe f);
+void myc_fe_mul(myc_fe h, const myc_fe f, const myc_fe g);
+void myc_fe_mul121666(myc_fe h, myc_fe f);
+void myc_fe_pow22523(myc_fe out, const myc_fe z);
+void myc_fe_sub(myc_fe h, const myc_fe f, const myc_fe g);
 
 #endif

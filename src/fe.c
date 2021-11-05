@@ -32,7 +32,7 @@ static uint64_t load_4(const unsigned char *in) {
     h = 0
 */
 
-void fe_0(fe h) {
+void myc_fe_0(myc_fe h) {
     h[0] = 0;
     h[1] = 0;
     h[2] = 0;
@@ -51,7 +51,7 @@ void fe_0(fe h) {
     h = 1
 */
 
-void fe_1(fe h) {
+void myc_fe_1(myc_fe h) {
     h[0] = 1;
     h[1] = 0;
     h[2] = 0;
@@ -78,7 +78,7 @@ void fe_1(fe h) {
        |h| bounded by 1.1*2^26,1.1*2^25,1.1*2^26,1.1*2^25,etc.
 */
 
-void fe_add(fe h, const fe f, const fe g) {
+void myc_fe_add(myc_fe h, const myc_fe f, const myc_fe g) {
     int32_t f0 = f[0];
     int32_t f1 = f[1];
     int32_t f2 = f[2];
@@ -131,7 +131,7 @@ void fe_add(fe h, const fe f, const fe g) {
     Preconditions: b in {0,1}.
 */
 
-void fe_cmov(fe f, const fe g, unsigned int b) {
+void myc_fe_cmov(myc_fe f, const myc_fe g, unsigned int b) {
     int32_t f0 = f[0];
     int32_t f1 = f[1];
     int32_t f2 = f[2];
@@ -194,7 +194,7 @@ void fe_cmov(fe f, const fe g, unsigned int b) {
     Preconditions: b in {0,1}.
 */
 
-void fe_cswap(fe f,fe g,unsigned int b) {
+void myc_fe_cswap(myc_fe f,myc_fe g,unsigned int b) {
     int32_t f0 = f[0];
     int32_t f1 = f[1];
     int32_t f2 = f[2];
@@ -264,7 +264,7 @@ void fe_cswap(fe f,fe g,unsigned int b) {
     h = f
 */
 
-void fe_copy(fe h, const fe f) {
+void myc_fe_copy(myc_fe h, const myc_fe f) {
     int32_t f0 = f[0];
     int32_t f1 = f[1];
     int32_t f2 = f[2];
@@ -294,7 +294,7 @@ void fe_copy(fe h, const fe f) {
     Ignores top bit of h.
 */
 
-void fe_frombytes(fe h, const unsigned char *s) {
+void myc_fe_frombytes(myc_fe h, const unsigned char *s) {
     int64_t h0 = load_4(s);
     int64_t h1 = load_3(s + 4) << 6;
     int64_t h2 = load_3(s + 7) << 5;
@@ -361,90 +361,90 @@ void fe_frombytes(fe h, const unsigned char *s) {
 
 
 
-void fe_invert(fe out, const fe z) {
-    fe t0;
-    fe t1;
-    fe t2;
-    fe t3;
+void myc_fe_invert(myc_fe out, const myc_fe z) {
+    myc_fe t0;
+    myc_fe t1;
+    myc_fe t2;
+    myc_fe t3;
     int i;
 
-    fe_sq(t0, z);
+    myc_fe_sq(t0, z);
 
     for (i = 1; i < 1; ++i) {
-        fe_sq(t0, t0);
+        myc_fe_sq(t0, t0);
     }
 
-    fe_sq(t1, t0);
+    myc_fe_sq(t1, t0);
 
     for (i = 1; i < 2; ++i) {
-        fe_sq(t1, t1);
+        myc_fe_sq(t1, t1);
     }
 
-    fe_mul(t1, z, t1);
-    fe_mul(t0, t0, t1);
-    fe_sq(t2, t0);
+    myc_fe_mul(t1, z, t1);
+    myc_fe_mul(t0, t0, t1);
+    myc_fe_sq(t2, t0);
 
     for (i = 1; i < 1; ++i) {
-        fe_sq(t2, t2);
+        myc_fe_sq(t2, t2);
     }
 
-    fe_mul(t1, t1, t2);
-    fe_sq(t2, t1);
+    myc_fe_mul(t1, t1, t2);
+    myc_fe_sq(t2, t1);
 
     for (i = 1; i < 5; ++i) {
-        fe_sq(t2, t2);
+        myc_fe_sq(t2, t2);
     }
 
-    fe_mul(t1, t2, t1);
-    fe_sq(t2, t1);
+    myc_fe_mul(t1, t2, t1);
+    myc_fe_sq(t2, t1);
 
     for (i = 1; i < 10; ++i) {
-        fe_sq(t2, t2);
+        myc_fe_sq(t2, t2);
     }
 
-    fe_mul(t2, t2, t1);
-    fe_sq(t3, t2);
+    myc_fe_mul(t2, t2, t1);
+    myc_fe_sq(t3, t2);
 
     for (i = 1; i < 20; ++i) {
-        fe_sq(t3, t3);
+        myc_fe_sq(t3, t3);
     }
 
-    fe_mul(t2, t3, t2);
-    fe_sq(t2, t2);
+    myc_fe_mul(t2, t3, t2);
+    myc_fe_sq(t2, t2);
 
     for (i = 1; i < 10; ++i) {
-        fe_sq(t2, t2);
+        myc_fe_sq(t2, t2);
     }
 
-    fe_mul(t1, t2, t1);
-    fe_sq(t2, t1);
+    myc_fe_mul(t1, t2, t1);
+    myc_fe_sq(t2, t1);
 
     for (i = 1; i < 50; ++i) {
-        fe_sq(t2, t2);
+        myc_fe_sq(t2, t2);
     }
 
-    fe_mul(t2, t2, t1);
-    fe_sq(t3, t2);
+    myc_fe_mul(t2, t2, t1);
+    myc_fe_sq(t3, t2);
 
     for (i = 1; i < 100; ++i) {
-        fe_sq(t3, t3);
+        myc_fe_sq(t3, t3);
     }
 
-    fe_mul(t2, t3, t2);
-    fe_sq(t2, t2);
+    myc_fe_mul(t2, t3, t2);
+    myc_fe_sq(t2, t2);
 
     for (i = 1; i < 50; ++i) {
-        fe_sq(t2, t2);
+        myc_fe_sq(t2, t2);
     }
 
-    fe_mul(t1, t2, t1);
-    fe_sq(t1, t1);
+    myc_fe_mul(t1, t2, t1);
+    myc_fe_sq(t1, t1);
 
     for (i = 1; i < 5; ++i) {
-        fe_sq(t1, t1);
+        myc_fe_sq(t1, t1);
     }
 
-    fe_mul(out, t1, t0);
+    myc_fe_mul(out, t1, t0);
 }
 
 
@@ -457,10 +457,10 @@ void fe_invert(fe out, const fe z) {
        |f| bounded by 1.1*2^26,1.1*2^25,1.1*2^26,1.1*2^25,etc.
 */
 
-int fe_isnegative(const fe f) {
+int myc_fe_isnegative(const myc_fe f) {
     unsigned char s[32];
 
-    fe_tobytes(s, f);
+    myc_fe_tobytes(s, f);
     
     return s[0] & 1;
 }
@@ -475,11 +475,11 @@ int fe_isnegative(const fe f) {
        |f| bounded by 1.1*2^26,1.1*2^25,1.1*2^26,1.1*2^25,etc.
 */
 
-int fe_isnonzero(const fe f) {
+int myc_fe_isnonzero(const myc_fe f) {
     unsigned char s[32];
     unsigned char r;
 
-    fe_tobytes(s, f);
+    myc_fe_tobytes(s, f);
 
     r = s[0];
     #define F(i) r |= s[i]
@@ -553,7 +553,7 @@ int fe_isnonzero(const fe f) {
     With tighter constraints on inputs can squeeze carries into int32.
 */
 
-void fe_mul(fe h, const fe f, const fe g) {
+void myc_fe_mul(myc_fe h, const myc_fe f, const myc_fe g) {
     int32_t f0 = f[0];
     int32_t f1 = f[1];
     int32_t f2 = f[2];
@@ -776,7 +776,7 @@ Postconditions:
    |h| bounded by 1.1*2^25,1.1*2^24,1.1*2^25,1.1*2^24,etc.
 */
 
-void fe_mul121666(fe h, fe f) {
+void myc_fe_mul121666(myc_fe h, myc_fe f) {
     int32_t f0 = f[0];
     int32_t f1 = f[1];
     int32_t f2 = f[2];
@@ -843,7 +843,7 @@ Postconditions:
    |h| bounded by 1.1*2^25,1.1*2^24,1.1*2^25,1.1*2^24,etc.
 */
 
-void fe_neg(fe h, const fe f) {
+void myc_fe_neg(myc_fe h, const myc_fe f) {
     int32_t f0 = f[0];
     int32_t f1 = f[1];
     int32_t f2 = f[2];
@@ -878,88 +878,88 @@ void fe_neg(fe h, const fe f) {
 }
 
 
-void fe_pow22523(fe out, const fe z) {
-    fe t0;
-    fe t1;
-    fe t2;
+void myc_fe_pow22523(myc_fe out, const myc_fe z) {
+    myc_fe t0;
+    myc_fe t1;
+    myc_fe t2;
     int i;
-    fe_sq(t0, z);
+    myc_fe_sq(t0, z);
 
     for (i = 1; i < 1; ++i) {
-        fe_sq(t0, t0);
+        myc_fe_sq(t0, t0);
     }
 
-    fe_sq(t1, t0);
+    myc_fe_sq(t1, t0);
 
     for (i = 1; i < 2; ++i) {
-        fe_sq(t1, t1);
+        myc_fe_sq(t1, t1);
     }
 
-    fe_mul(t1, z, t1);
-    fe_mul(t0, t0, t1);
-    fe_sq(t0, t0);
+    myc_fe_mul(t1, z, t1);
+    myc_fe_mul(t0, t0, t1);
+    myc_fe_sq(t0, t0);
 
     for (i = 1; i < 1; ++i) {
-        fe_sq(t0, t0);
+        myc_fe_sq(t0, t0);
     }
 
-    fe_mul(t0, t1, t0);
-    fe_sq(t1, t0);
+    myc_fe_mul(t0, t1, t0);
+    myc_fe_sq(t1, t0);
 
     for (i = 1; i < 5; ++i) {
-        fe_sq(t1, t1);
+        myc_fe_sq(t1, t1);
     }
 
-    fe_mul(t0, t1, t0);
-    fe_sq(t1, t0);
+    myc_fe_mul(t0, t1, t0);
+    myc_fe_sq(t1, t0);
 
     for (i = 1; i < 10; ++i) {
-        fe_sq(t1, t1);
+        myc_fe_sq(t1, t1);
     }
 
-    fe_mul(t1, t1, t0);
-    fe_sq(t2, t1);
+    myc_fe_mul(t1, t1, t0);
+    myc_fe_sq(t2, t1);
 
     for (i = 1; i < 20; ++i) {
-        fe_sq(t2, t2);
+        myc_fe_sq(t2, t2);
     }
 
-    fe_mul(t1, t2, t1);
-    fe_sq(t1, t1);
+    myc_fe_mul(t1, t2, t1);
+    myc_fe_sq(t1, t1);
 
     for (i = 1; i < 10; ++i) {
-        fe_sq(t1, t1);
+        myc_fe_sq(t1, t1);
     }
 
-    fe_mul(t0, t1, t0);
-    fe_sq(t1, t0);
+    myc_fe_mul(t0, t1, t0);
+    myc_fe_sq(t1, t0);
 
     for (i = 1; i < 50; ++i) {
-        fe_sq(t1, t1);
+        myc_fe_sq(t1, t1);
     }
 
-    fe_mul(t1, t1, t0);
-    fe_sq(t2, t1);
+    myc_fe_mul(t1, t1, t0);
+    myc_fe_sq(t2, t1);
 
     for (i = 1; i < 100; ++i) {
-        fe_sq(t2, t2);
+        myc_fe_sq(t2, t2);
     }
 
-    fe_mul(t1, t2, t1);
-    fe_sq(t1, t1);
+    myc_fe_mul(t1, t2, t1);
+    myc_fe_sq(t1, t1);
 
     for (i = 1; i < 50; ++i) {
-        fe_sq(t1, t1);
+        myc_fe_sq(t1, t1);
     }
 
-    fe_mul(t0, t1, t0);
-    fe_sq(t0, t0);
+    myc_fe_mul(t0, t1, t0);
+    myc_fe_sq(t0, t0);
 
     for (i = 1; i < 2; ++i) {
-        fe_sq(t0, t0);
+        myc_fe_sq(t0, t0);
     }
 
-    fe_mul(out, t0, z);
+    myc_fe_mul(out, t0, z);
     return;
 }
 
@@ -976,10 +976,10 @@ Postconditions:
 */
 
 /*
-See fe_mul.c for discussion of implementation strategy.
+See myc_fe_mul.c for discussion of implementation strategy.
 */
 
-void fe_sq(fe h, const fe f) {
+void myc_fe_sq(myc_fe h, const myc_fe f) {
     int32_t f0 = f[0];
     int32_t f1 = f[1];
     int32_t f2 = f[2];
@@ -1139,10 +1139,10 @@ Postconditions:
 */
 
 /*
-See fe_mul.c for discussion of implementation strategy.
+See myc_fe_mul.c for discussion of implementation strategy.
 */
 
-void fe_sq2(fe h, const fe f) {
+void myc_fe_sq2(myc_fe h, const myc_fe f) {
     int32_t f0 = f[0];
     int32_t f1 = f[1];
     int32_t f2 = f[2];
@@ -1312,7 +1312,7 @@ Postconditions:
    |h| bounded by 1.1*2^26,1.1*2^25,1.1*2^26,1.1*2^25,etc.
 */
 
-void fe_sub(fe h, const fe f, const fe g) {
+void myc_fe_sub(myc_fe h, const myc_fe f, const myc_fe g) {
     int32_t f0 = f[0];
     int32_t f1 = f[1];
     int32_t f2 = f[2];
@@ -1383,7 +1383,7 @@ Proof:
   so floor(2^(-255)(h + 19 2^(-25) h9 + 2^(-1))) = q.
 */
 
-void fe_tobytes(unsigned char *s, const fe h) {
+void myc_fe_tobytes(unsigned char *s, const myc_fe h) {
     int32_t h0 = h[0];
     int32_t h1 = h[1];
     int32_t h2 = h[2];
