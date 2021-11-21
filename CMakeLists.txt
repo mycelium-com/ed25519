@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.9)
 project(ed25519 VERSION 1.0.0 DESCRIPTION "ED25519 utilities library")
 
+include(GNUInstallDirs)
+
 if (NOT TARGET hashing)
 # Hashing functions library
 add_subdirectory(extras/hashing)
@@ -17,6 +19,7 @@ set(ed25519_src
    src/ge.c
 )
 
+if (NOT TARGET ed25519)
 add_library(ed25519 ${ed25519_src})
 target_link_libraries(ed25519 hashing)
 
@@ -29,11 +32,11 @@ set_target_properties(ed25519 PROPERTIES
    PUBLIC_HEADER "include/ed25519.h;include/ge.h"
 )
 
-include(GNUInstallDirs)
 install(TARGETS ed25519
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+endif()
 
 configure_file(ed25519.pc.in ed25519.pc @ONLY)
 install(FILES ${CMAKE_BINARY_DIR}/ed25519.pc DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
