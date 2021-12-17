@@ -39,7 +39,7 @@ install(TARGETS ed25519
 
 add_executable(create_keypair misc/create_keypair.c)
 target_include_directories(create_keypair PRIVATE include)
-target_link_libraries(create_keypair ed25519 $<$<PLATFORM_ID:Linux>:"-lbsd">)
+target_link_libraries(create_keypair ed25519 $<$<PLATFORM_ID:Linux>:bsd>)
 
 endif()
 
