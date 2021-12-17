@@ -36,6 +36,11 @@ install(TARGETS ed25519
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+add_executable(create_keypair misc/create_keypair.c)
+target_include_directories(create_keypair PRIVATE include)
+target_link_libraries(create_keypair ed25519)
+
 endif()
 
 configure_file(ed25519.pc.in ed25519.pc @ONLY)
