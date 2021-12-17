@@ -37,9 +37,11 @@ install(TARGETS ed25519
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
+if (BUILD_UTILS)
 add_executable(create_keypair_ed25519 misc/create_keypair.c)
 target_include_directories(create_keypair_ed25519 PRIVATE include)
 target_link_libraries(create_keypair_ed25519 ed25519 $<$<PLATFORM_ID:Linux>:bsd>)
+endif()
 
 endif()
 
