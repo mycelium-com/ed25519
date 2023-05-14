@@ -33,7 +33,7 @@ int myc_ed25519_add_scalar(unsigned char *public_key, unsigned char *private_key
     }
     
     /* Multiply Z by 8 */
-    multiply(Z8, Z, 32);
+    multiply(Z8, Z, 28);
 
     /* private key: child = 8*Z + parent */
     if (private_key) {
